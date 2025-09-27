@@ -1,0 +1,33 @@
+<button
+    class="{{params.class}} {{params.class_modifier}}"
+
+    {#  focused #}
+    {% if params.focusable is defined %}
+        focusable="{{params.focusable}}"
+    {% endif %}
+
+    {#  aria-label #}
+    {% if params.aria_label is defined %}
+        aria-label="{{params.aria_label}}"
+    {% endif %}
+
+    {#  aria-hidden #}
+    {% if params.aria_hidden is defined %}
+        aria-hidden="{{params.aria_hidden}}"
+    {% endif %}
+
+    {#  onclick url #}
+    {% if params.url is defined %}
+        onclick="window.location.href='{{params.url | safe}}'"
+    {% endif %}
+
+    {#  disabled #}
+    {% if params.disabled == true%}
+        disabled
+    {% endif %}
+
+>{{params.text}}
+    {% if params.post_html %}
+        {{params.post_html | safe}}
+    {% endif %}
+</button>

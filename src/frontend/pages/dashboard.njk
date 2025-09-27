@@ -1,0 +1,62 @@
+---
+layout: base.template.njk
+title: Welcome to opencode
+navigation: true
+footer: true
+---
+ {%- from "./../templates/_setup/macros/component.macro.njk" import component -%}
+
+ 
+ 
+ 
+ <head>
+     <!-- // ... -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@kern-ux/native/dist/kern.min.css" />
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@kern-ux/native/dist/fonts/fira-sans.css" />
+     <!-- // ... -->
+    </head>
+    {% set hideProperties = ['private', 'full_name']%}
+    {% set items = maengel.items %}
+ 
+<table class="tabxxle kern-table kern-table--striped">
+        {% for item in items %}
+            {# ITEM{{item}} #}
+            {% set index = loop.index%}
+            {% set key = 'key_' ~ index %}
+            <tr class="kern-table__row {{key}}" data-repo="{{ index }}" data-active="true" data-searchable="{{item | allValues }}">
+                {% set isHiddenProperty = hideProperties | contains('index') %}
+                <td class="kern-table__cell"  data-property="index" data-hidden="{{isHiddenProperty}}">
+                    {# <a href="/opencode/{{ key }}" class="text-decoration-none"> #}
+                        #{{ index }}
+                    {# </a> #}
+                </td>
+                {% set property = "avatarUrl" %}
+                {% set value = item.media_url%}
+
+                 <td class="kern-table__cell" data-property="{{ property }}" data-hidden="{{isHiddenProperty}}">
+                            {% if value != "" %}
+                                <img width="20" height="20" src="{{ value | safe }}" />
+                            {% endif %}
+
+                    </td>
+                {% for property, value in item %}
+                    {% set isHiddenProperty = hideProperties | contains(property) %}
+
+                    {# {% if not hideProperties | contains(property) %} #}
+                    <td class="kern-table__cell" data-property="{{ property }}" data-hidden="{{isHiddenProperty}}">
+                            {% if property | contains('avatar') %}
+                            
+                                {% elif property == 'webUrl' %}
+                                <a href="{{ value | safe }}" class="text-decoration-none" target="_blank">{{property}}</a>
+
+                            {% else %}
+                                <span class="skill-search hidden">{{ value }}</span>
+                                <span class="skill-value">{{ value }}</span>
+                            {% endif %}
+                        </td>
+    {# {% endif %} #}
+                {% endfor %}
+            </tr>
+            
+        {% endfor %}
+    </table>
