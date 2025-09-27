@@ -15,6 +15,21 @@ footer: true
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@kern-ux/native/dist/fonts/fira-sans.css" />
      <!-- // ... -->
     </head>
+
+    <div class="container my-5 text-center">
+    {% for link in main.links %}
+    {% set disabled = (link.disabled is defined and link.disabled == true) or (link.url is not defined) %}
+        {{
+            component("button_link", {
+                "type": link.type or "link",
+                "text": link.text,
+                "url": link.url,
+                "disabled": disabled
+            })
+        }}
+    {% endfor %}
+</div>
+
     {% set hideProperties = ['private', 'full_name']%}
     {% set items = maengel_open.items %}
     {% set items_all = maengel.items %}

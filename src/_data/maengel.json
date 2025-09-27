@@ -44203,7 +44203,7 @@
       "tags": [
         "issue-open-more-than-year"
       ],
-      "daysSolving": 632
+      "daysSolving": 633
     },
     {
       "service_request_id": "1029153",
@@ -69689,7 +69689,7 @@
       "tags": [
         "issue-open-more-than-year"
       ],
-      "daysSolving": 486
+      "daysSolving": 487
     },
     {
       "service_request_id": "1046281",
@@ -81048,7 +81048,7 @@
         "issue-open-more-than-year",
         "a11y-word-defekt"
       ],
-      "daysSolving": 468
+      "daysSolving": 469
     },
     {
       "service_request_id": "1048874",
@@ -100674,7 +100674,7 @@
       "tags": [
         "issue-open-more-than-year"
       ],
-      "daysSolving": 408
+      "daysSolving": 409
     },
     {
       "service_request_id": "1056221",
@@ -134444,7 +134444,7 @@
         "issue-",
         "a11y-word-scherben"
       ],
-      "daysSolving": 282
+      "daysSolving": 283
     },
     {
       "service_request_id": "1072595",
@@ -138055,7 +138055,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 296
+      "daysSolving": 297
     },
     {
       "service_request_id": "1071124",
@@ -138074,7 +138074,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 296
+      "daysSolving": 297
     },
     {
       "service_request_id": "1071119",
@@ -154593,7 +154593,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 234
+      "daysSolving": 235
     },
     {
       "service_request_id": "1077683",
@@ -157131,7 +157131,7 @@
         "issue-",
         "a11y-word-defekt"
       ],
-      "daysSolving": 187
+      "daysSolving": 188
     },
     {
       "service_request_id": "1084353",
@@ -163157,7 +163157,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 208
+      "daysSolving": 209
     },
     {
       "service_request_id": "1080490",
@@ -164732,7 +164732,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 153
+      "daysSolving": 154
     },
     {
       "service_request_id": "1088267",
@@ -172584,7 +172584,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 120
+      "daysSolving": 121
     },
     {
       "service_request_id": "1092958",
@@ -174424,7 +174424,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 127
+      "daysSolving": 128
     },
     {
       "service_request_id": "1091957",
@@ -176384,7 +176384,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 132
+      "daysSolving": 133
     },
     {
       "service_request_id": "1091139",
@@ -181534,7 +181534,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 146
+      "daysSolving": 147
     },
     {
       "service_request_id": "1089153",
@@ -186064,7 +186064,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 101
+      "daysSolving": 102
     },
     {
       "service_request_id": "1095780",
@@ -187194,7 +187194,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 105
+      "daysSolving": 106
     },
     {
       "service_request_id": "1095172",
@@ -187214,7 +187214,7 @@
         "issue-",
         "a11y-word-eng"
       ],
-      "daysSolving": 105
+      "daysSolving": 106
     },
     {
       "service_request_id": "1095166",
@@ -189244,7 +189244,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 110
+      "daysSolving": 111
     },
     {
       "service_request_id": "1094410",
@@ -191629,7 +191629,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 117
+      "daysSolving": 118
     },
     {
       "service_request_id": "1093368",
@@ -191648,7 +191648,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 117
+      "daysSolving": 118
     },
     {
       "service_request_id": "1093358",
@@ -196933,7 +196933,7 @@
         "issue-",
         "a11y-word-eng"
       ],
-      "daysSolving": 73
+      "daysSolving": 74
     },
     {
       "service_request_id": "1100176",
@@ -198047,7 +198047,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 75
+      "daysSolving": 76
     },
     {
       "service_request_id": "1099766",
@@ -213374,7 +213374,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 56
+      "daysSolving": 57
     },
     {
       "service_request_id": "1102834",
@@ -214005,7 +214005,7 @@
       "tags": [
         "issue-"
       ],
-      "daysSolving": 2
+      "daysSolving": 3
     },
     {
       "service_request_id": "1112101",
@@ -222235,7 +222235,7 @@
     "48324",
     "48351"
   ],
-  "generated": "2025-09-27T15:10:24.056Z",
+  "generated": "2025-09-27T15:35:47.822Z",
   "stats": {
     "solvingPerService": {
       "Baum": {
@@ -222244,7 +222244,7 @@
         "solved": 524
       },
       "Verunreinigung": {
-        "avgDays": 206.5,
+        "avgDays": 206.6,
         "unsolved": 26,
         "solved": 527
       },
@@ -222254,7 +222254,7 @@
         "solved": 419
       },
       "Straße": {
-        "avgDays": 277,
+        "avgDays": 277.1,
         "unsolved": 17,
         "solved": 760
       },
@@ -222284,7 +222284,7 @@
         "solved": 569
       },
       "Spielplatz": {
-        "avgDays": 95.8,
+        "avgDays": 95.9,
         "unsolved": 57,
         "solved": 254
       },
@@ -222294,7 +222294,7 @@
         "solved": 133
       },
       "Glas-/Elektroschrottcontainerstandort": {
-        "avgDays": 192.9,
+        "avgDays": 193,
         "unsolved": 11,
         "solved": 314
       },
@@ -222319,7 +222319,7 @@
         "solved": 27
       },
       "Gewässer": {
-        "avgDays": 215,
+        "avgDays": 215.1,
         "unsolved": 9,
         "solved": 90
       },
@@ -222351,12 +222351,12 @@
         "solved": 884
       },
       "48149": {
-        "avgDays": 230,
+        "avgDays": 230.1,
         "unsolved": 63,
         "solved": 737
       },
       "48151": {
-        "avgDays": 137,
+        "avgDays": 137.1,
         "unsolved": 49,
         "solved": 803
       },
@@ -222386,7 +222386,7 @@
         "solved": 881
       },
       "48163": {
-        "avgDays": 199.7,
+        "avgDays": 199.8,
         "unsolved": 47,
         "solved": 1003
       },
@@ -222396,7 +222396,7 @@
         "solved": 781
       },
       "48167": {
-        "avgDays": 161.4,
+        "avgDays": 161.5,
         "unsolved": 54,
         "solved": 779
       },

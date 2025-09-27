@@ -4,6 +4,7 @@ title: Heatmap – Bearbeitungsdauer
 navigation: true
 footer: true
 ---
+ {%- from "./../templates/_setup/macros/component.macro.njk" import component -%}
 
 {% set data = maengel.stats.solvingPerService %}
 
@@ -17,6 +18,20 @@ footer: true
   .sw { display:inline-block; width:14px; height:14px; border-radius:3px; margin-right:.3rem; }
   .sw.good{background:#1f7a33}.sw.mid{background:#9a9a2a}.sw.bad{background:#8b2b2b}
 </style>
+
+<div class="container my-5 text-center">
+    {% for link in main.links %}
+    {% set disabled = (link.disabled is defined and link.disabled == true) or (link.url is not defined) %}
+        {{
+            component("button_link", {
+                "type": link.type or "link",
+                "text": link.text,
+                "url": "/" ~ link.url,
+                "disabled": disabled
+            })
+        }}
+    {% endfor %}
+</div>
 
 <h1>{{ title }}</h1>
 

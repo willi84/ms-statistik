@@ -19,6 +19,11 @@
             "type": "button"
         },
         {
+            "text": "API (open issues)",
+            "url": "api/issues/open",
+            "type": "button"
+        },
+        {
             "text": "Heatmap (Services)",
             "url": "heatmap",
             "type": "button"
