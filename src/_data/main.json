@@ -12,6 +12,16 @@
             "text": "Dashboard",
             "url": "dashboard",
             "type": "button"
+        },
+        {
+            "text": "API (all issues)",
+            "url": "api/issues/all",
+            "type": "button"
+        },
+        {
+            "text": "API (open issues)",
+            "url": "api/issues/open",
+            "type": "button"
         }
     ]
 }

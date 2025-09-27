@@ -17,7 +17,32 @@ footer: true
     </head>
     {% set hideProperties = ['private', 'full_name']%}
     {% set items = maengel_open.items %}
- 
+    {% set items_all = maengel.items %}
+  <div data-search="repos">
+    {% set count = maengel_open.count%}
+    {% for property in maengel_open.properties %}
+        {% set isHiddenKey = hideProperties | contains(property) %}
+{# <button type="button" class="kern-btn kern-btn--primary">
+<span class="kern-label">Primary Button</span>
+</button> #}
+
+            <button type="button" class="btxxn btn-prixxmary btn-xs kern-btn kern-btn--primary" data-active="{{ not isHiddenKey }}"  data-filter-type="property" data-filter-value="{{ property }}">
+     {# <span class="badge bg-secondary">{{item.count}}</span> #}
+     {{property}}
+     {# <span class="kern-label">{{property}}</span> #}
+     {# <span class="badge bg-secondary">{{item.count}}</span> #}
+   </button>
+    {% endfor %}
+    <div class="kern-form-input">
+{# <label class="kern-label" for="text">Familienname</label> #}
+{# <input class="kern-form-input__input" id="text" name="text" type="text"> #}
+<input type="text" class="kern-form-input__input form-conXtrol mb-3" placeholder="Search {{count}} issues [all issues: {{maengel.count}}]..." aria-label="Search repositories..." />
+<div id="emailHelp" class="form-text search__result">
+    <span class="search__default">&nbsp;</span>
+    <span class="search__no-result hidden">Der Begriff <span class="search__value"></span> wurde nicht gefunden.</span>
+    <span class="search__has-result hidden">Es wurden <span class="search__num-results"></span> Ergebnisse gefunden.</span>
+</div>
+</div>
 <table class="tabxxle kern-table kern-table--striped">
         {% for item in items %}
             {# ITEM{{item}} #}
