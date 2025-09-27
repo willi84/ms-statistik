@@ -1,6 +1,6 @@
-import { FS } from "../../_shared/fs/fs";
-import { analyzeItems, getMaengel } from "./nrw/nrw";
-import { API_NRW, MANDANT_ID } from "./nrw/nrw.config";
+import { FS } from '../../_shared/fs/fs';
+import { analyzeItems, getMaengel } from './nrw/nrw';
+import { API_NRW, MANDANT_ID } from './nrw/nrw.config';
 
 const rawItems = getMaengel(API_NRW, MANDANT_ID);
 const items = analyzeItems(rawItems);
@@ -15,44 +15,42 @@ const stats: any = {
 
 zipcodes.sort();
 const properties = items.length > 0 ? Object.keys(items[0]) : [];
-const openedItems = items.filter((item: any) => item.status !== "closed");
+const openedItems = items.filter((item: any) => item.status !== 'closed');
 const count = items.length;
 const countOpen = openedItems.length;
 const tmpStats: any = {
     solvingPerService: {},
-    solvingPerZIP: {}
+    solvingPerZIP: {},
 };
 const services = [];
 for (const item of items) {
-    console.log(item);
-    if (!item.service_name){
-        console.log(item)
-    }
     if (!tmpStats.solvingPerService[item.service_name]) {
         tmpStats.solvingPerService[item.service_name] = {
             days: [],
             unsolved: 0,
             solved: 0,
-        },
+        };
         services.push(item.service_name);
     }
-    if(!tmpStats.solvingPerZIP[item.zipcode]) {
+    if (!tmpStats.solvingPerZIP[item.zipcode]) {
         tmpStats.solvingPerZIP[item.zipcode] = {
             days: [],
             unsolved: 0,
             solved: 0,
-        }
+        };
     }
-    if(item.status !== "closed") {
+    if (item.status !== 'closed') {
         tmpStats.solvingPerService[item.service_name].unsolved++;
         tmpStats.solvingPerZIP[item.zipcode].unsolved++;
-        tmpStats.solvingPerService[item.service_name].days.push(item.daysSolving);
+        tmpStats.solvingPerService[item.service_name].days.push(
+            item.daysSolving
+        );
+        // console.log(item.daysSolving);
         tmpStats.solvingPerZIP[item.zipcode].days.push(item.daysSolving);
     } else {
         tmpStats.solvingPerService[item.service_name].solved++;
         tmpStats.solvingPerZIP[item.zipcode].solved++;
     }
-
 }
 for (const service of services) {
     const entry = tmpStats.solvingPerService[service];
@@ -81,13 +79,13 @@ const TARGET = 'src/_data/maengel.json';
 FS.writeFile(TARGET, JSON.stringify(finalData, null, 2));
 
 const finalData2: any = {
-  items: openedItems,
-  zipcodes,
-  generated,
-  stats,
-  count: countOpen,
-  properties,
+    items: openedItems,
+    zipcodes,
+    generated,
+    stats,
+    count: countOpen,
+    properties,
 };
 
-const TARGET2 = "src/_data/maengel_open.json";
+const TARGET2 = 'src/_data/maengel_open.json';
 FS.writeFile(TARGET2, JSON.stringify(finalData2, null, 2));

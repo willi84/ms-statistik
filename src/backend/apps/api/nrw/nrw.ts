@@ -1,35 +1,44 @@
-import { LOG } from "../../../_shared/log/log";
-import { A11Y_WORDS, FORWAREDNOTES, SOLVEDNOTES, STATUS_TYPES } from "./nrw.config";
-const { execSync } = require("child_process");
-import { MAENGEL } from "./nrw.d";
+import { LOG } from '../../../_shared/log/log';
+import {
+    A11Y_WORDS,
+    FORWAREDNOTES,
+    SOLVEDNOTES,
+    STATUS_TYPES,
+} from './nrw.config';
+const { execSync } = require('child_process');
+import { MAENGEL } from './nrw.d';
 
-LOG.OK("API");
+LOG.OK('API');
+const startYear = 2023;
+// const startYear = 2025;
+const startMonth = 1;
+// const startMonth = 6;
 
 const getEndDate = (year: number, month: number) => {
     // Monat 1–12
     const lastDay = new Date(year, month, 0).getDate();
-    return `${year}-${String(month).padStart(2, "0")}-${lastDay}`;
+    return `${year}-${String(month).padStart(2, '0')}-${lastDay}`;
 };
 
 export const getMaengel = (api: string, mandantID: string): MAENGEL[] => {
     const allItems: MAENGEL[] = [];
-    for (let year = 2023; year <= new Date().getFullYear(); year++) {
-        for (let month = 1; month <= 12; month++) {
-            const start = `${year}-${String(month).padStart(2, "0")}-01`;
+    for (let year = startYear; year <= new Date().getFullYear(); year++) {
+        for (let month = startMonth; month <= 12; month++) {
+            const start = `${year}-${String(month).padStart(2, '0')}-01`;
             const end = getEndDate(year, month);
             const url = `${api}/beteiligung/${mandantID}/requests.json?start_date=${start}&end_date=${end}`;
 
             try {
-                const out = execSync(`curl -s "${url}"`).toString("utf-8");
+                const out = execSync(`curl -s "${url}"`).toString('utf-8');
                 const items: MAENGEL[] = JSON.parse(out);
                 const itemsClosed = items.filter(
-                    (i: MAENGEL) => i.status === "closed",
+                    (i: MAENGEL) => i.status === 'closed'
                 );
                 const itemsOpen = items.filter(
-                    (i: MAENGEL) => i.status !== "closed",
+                    (i: MAENGEL) => i.status !== 'closed'
                 );
                 LOG.OK(
-                    `GET ${start} ... ${items.length} Einträge (${itemsClosed.length} geschlossen, ${itemsOpen.length} offen)`,
+                    `GET ${start} ... ${items.length} Einträge (${itemsClosed.length} geschlossen, ${itemsOpen.length} offen)`
                 );
                 allItems.push(...items);
             } catch (err: any) {
@@ -76,7 +85,7 @@ export const getA11yIssues = (item: MAENGEL) => {
     const status = item.status ? item.status.toLowerCase() : '';
     for (const type of STATUS_TYPES) {
         if (status.indexOf(type) !== -1) {
-            return (`type-${type}`);
+            return `type-${type}`;
         }
     }
     const description = item.description ? item.description.toLowerCase() : '';
@@ -124,9 +133,14 @@ export const analyzeItems = (rawItems: MAENGEL[]) => {
                     (24 * 60 * 60 * 1000)
             );
             newItem.daysSolving = daysSolving;
+        } else {
+            daysSolving = Math.floor(
+                (new Date().getTime() - new Date(startDate).getTime()) /
+                    (24 * 60 * 60 * 1000)
+            );
+            newItem.daysSolving = daysSolving;
         }
         items.push(newItem);
     }
-    // console.log(unknownSolvedNotes);
     return items;
 };
