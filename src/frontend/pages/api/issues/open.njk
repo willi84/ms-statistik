@@ -1,0 +1,9 @@
+---
+layout: raw.template.njk
+---
+{% set data = maengel_open.items %}
+{
+    {%- if data -%}
+    "data": {{ data | dump | safe }}
+  {%- endif -%}
+}
