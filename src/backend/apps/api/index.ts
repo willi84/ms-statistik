@@ -13,7 +13,7 @@ const stats: any = {
     solvingPerZIP: {},
 };
 
-zipcodes.sort();
+
 const properties = items.length > 0 ? Object.keys(items[0]) : [];
 const openedItems = items.filter((item: any) => item.status !== 'closed');
 const count = items.length;
@@ -24,6 +24,14 @@ const tmpStats: any = {
 };
 const services = [];
 for (const item of items) {
+    if (zipcodes.indexOf(item.zipcode) === -1) {
+        zipcodes.push(item.zipcode);
+        tmpStats.solvingPerZIP[item.zipcode] = {
+            days: [],
+            unsolved: 0,
+            solved: 0,
+        };
+    }
     if (!tmpStats.solvingPerService[item.service_name]) {
         tmpStats.solvingPerService[item.service_name] = {
             days: [],
@@ -31,13 +39,6 @@ for (const item of items) {
             solved: 0,
         };
         services.push(item.service_name);
-    }
-    if (!tmpStats.solvingPerZIP[item.zipcode]) {
-        tmpStats.solvingPerZIP[item.zipcode] = {
-            days: [],
-            unsolved: 0,
-            solved: 0,
-        };
     }
     if (item.status !== 'closed') {
         tmpStats.solvingPerService[item.service_name].unsolved++;
@@ -51,7 +52,9 @@ for (const item of items) {
         tmpStats.solvingPerService[item.service_name].solved++;
         tmpStats.solvingPerZIP[item.zipcode].solved++;
     }
+    // const year = 
 }
+zipcodes.sort();
 for (const service of services) {
     const entry = tmpStats.solvingPerService[service];
     const sum = entry.days.reduce((a: number, b: number) => a + b, 0);
@@ -63,9 +66,12 @@ for (const service of services) {
     };
 }
 for (const zip of zipcodes) {
-    const entry = tmpStats.solvingPerZip[zip];
+    const entry = tmpStats.solvingPerZIP[zip];
     const sum = entry.days.reduce((a: number, b: number) => a + b, 0);
     const avg = entry.days.length > 0 ? sum / entry.days.length : 0;
+    if (!stats.solvingPerZIP[zip]) {
+        stats.solvingPerZIP[zip] = {};
+    }
     stats.solvingPerZIP[zip] = {
         avgDays: Math.round(avg * 10) / 10,
         unsolved: entry.unsolved,

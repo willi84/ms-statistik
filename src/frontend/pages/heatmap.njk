@@ -1,0 +1,58 @@
+---
+layout: base.template.njk
+title: Heatmap – Bearbeitungsdauer
+navigation: true
+footer: true
+---
+
+{% set data = maengel.stats.solvingPerService %}
+
+<style>
+  .t { width:100%; border-collapse:collapse; margin-top:1rem; }
+  .t th, .t td { padding:.5rem .6rem; border:1px solid #222; text-align:left; }
+  .good { background:#12381a; color:#eee; }
+  .mid  { background:#3a3a12; color:#eee; }
+  .bad  { background:#3a1414; color:#eee; }
+  .legend { margin:.8rem 0; }
+  .sw { display:inline-block; width:14px; height:14px; border-radius:3px; margin-right:.3rem; }
+  .sw.good{background:#1f7a33}.sw.mid{background:#9a9a2a}.sw.bad{background:#8b2b2b}
+</style>
+
+<h1>{{ title }}</h1>
+
+<div class="legend">
+  <span>Legende (Ø Tage):</span>
+  <span><i class="sw good"></i> ≤ 14 Tage</span>
+  <span><i class="sw mid"></i> 15–45 Tage</span>
+  <span><i class="sw bad"></i> > 45 Tage</span>
+</div>
+
+<table class="t">
+  <thead>
+    <tr>
+      <th>Services</th>
+      <th>Ø Tage</th>
+      <th>gelöst</th>
+      <th>offen</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pair in data | dictsort %}
+      {% set name = pair[0] %}
+      {% set v = pair[1] %}
+      {% if v.avgDays <= 14 %}
+        {% set cls = "good" %}
+      {% elseif v.avgDays <= 45 %}
+        {% set cls = "mid" %}
+      {% else %}
+        {% set cls = "bad" %}
+      {% endif %}
+      <tr class="{{ cls }}">
+        <td>{{ name }}</td>
+        <td>{{ v.avgDays | round(1) }}</td>
+        <td>{{ v.solved }}</td>
+        <td>{{ v.unsolved }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

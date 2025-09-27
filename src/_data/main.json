@@ -19,8 +19,13 @@
             "type": "button"
         },
         {
-            "text": "API (open issues)",
-            "url": "api/issues/open",
+            "text": "Heatmap (Services)",
+            "url": "heatmap",
+            "type": "button"
+        },
+        {
+            "text": "Heatmap (PLZ)",
+            "url": "heatmap_plz",
             "type": "button"
         }
     ]

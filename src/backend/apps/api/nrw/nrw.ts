@@ -22,8 +22,8 @@ const getEndDate = (year: number, month: number) => {
 
 export const getMaengel = (api: string, mandantID: string): MAENGEL[] => {
     const allItems: MAENGEL[] = [];
-    for (let year = startYear; year <= new Date().getFullYear(); year++) {
-        for (let month = startMonth; month <= 12; month++) {
+    for (let year = 2023; year <= new Date().getFullYear(); year++) {
+        for (let month = 1; month <= 12; month++) {
             const start = `${year}-${String(month).padStart(2, '0')}-01`;
             const end = getEndDate(year, month);
             const url = `${api}/beteiligung/${mandantID}/requests.json?start_date=${start}&end_date=${end}`;

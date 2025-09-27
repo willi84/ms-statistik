@@ -1,0 +1,77 @@
+---
+layout: base.template.njk
+title: Heatmap – Bearbeitungsdauer
+navigation: true
+footer: true
+---
+
+{% set data = maengel.stats.solvingPerZIP %}
+
+<style>
+  .t { width:100%; border-collapse:collapse; margin-top:1rem; }
+  .t th, .t td { padding:.5rem .6rem; border:1px solid #222; text-align:left; }
+  .good { background:#12381a; color:#eee; }
+  .mid  { background:#3a3a12; color:#eee; }
+  .bad  { background:#3a1414; color:#eee; }
+  .legend { margin:.8rem 0; }
+  .sw { display:inline-block; width:14px; height:14px; border-radius:3px; margin-right:.3rem; }
+  .sw.good{background:#1f7a33}.sw.mid{background:#9a9a2a}.sw.bad{background:#8b2b2b}
+</style>
+
+<h1>{{ title }}</h1>
+
+{% set PLZ_STADTTEIL = {
+  "48143": ["Altstadt", "Centrum"],
+  "48145": ["Mauritz-Mitte", "Hansaviertel"],
+  "48147": ["Mitte-Nordost", "Uppenberg"],
+  "48149": ["Gievenbeck", "Kreuzviertel"],
+  "48151": ["Pluggendorf", "Geist"],
+  "48153": ["Südviertel", "Schützenhof"],
+  "48155": ["Mauritz-Ost", "Gremmendorf"],
+  "48157": ["Gelmer", "Handorf", "Coerde"],
+  "48159": ["Kinderhaus"],
+  "48161": ["Nienberge", "Häger"],
+  "48163": ["Mecklenbeck", "Albachten"],
+  "48165": ["Hiltrup"],
+  "48167": ["Wolbeck", "Angelmodde"],
+  "48268": ["Greven (Randgebiet zu Münster-Handorf/Gelmer)"],
+  "48324": ["Sendenhorst (Randbereich Angelmodde/Wolbeck)"],
+  "48351": ["Everswinkel (Randbereich Wolbeck/Angelmodde)"]
+} %}
+
+<div class="legend">
+  <span>Legende (Ø Tage):</span>
+  <span><i class="sw good"></i> ≤ 14 Tage</span>
+  <span><i class="sw mid"></i> 15–45 Tage</span>
+  <span><i class="sw bad"></i> > 45 Tage</span>
+</div>
+
+<table class="t">
+  <thead>
+    <tr>
+      <th>PLZ</th>
+      <th>Ø Tage</th>
+      <th>gelöst</th>
+      <th>offen</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pair in data | dictsort %}
+      {% set name = pair[0] %}
+      {% set v = pair[1] %}
+      {% if v.avgDays <= 14 %}
+        {% set cls = "good" %}
+      {% elseif v.avgDays <= 45 %}
+        {% set cls = "mid" %}
+      {% else %}
+        {% set cls = "bad" %}
+      {% endif %}
+      <tr class="{{ cls }}">
+        <td>{{ PLZ_STADTTEIL[name] }} [{{name}}]</td>
+        <td>{{ v.avgDays | round(1) }}</td>
+        <td>{{ v.solved }}</td>
+        <td>{{ v.unsolved }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
