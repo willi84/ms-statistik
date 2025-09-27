@@ -1,5 +1,5 @@
 import { LOG } from "../../../_shared/log/log";
-import { FORWAREDNOTES, SOLVEDNOTES } from "./nrw.config";
+import { A11Y_WORDS, FORWAREDNOTES, SOLVEDNOTES, STATUS_TYPES } from "./nrw.config";
 const { execSync } = require("child_process");
 import { MAENGEL } from "./nrw.d";
 
@@ -49,6 +49,45 @@ export const setStat = (key: string, stats: any) => {
     }
     stats[key]++;
 };
+
+export const analyzeSolving = (item: MAENGEL) => {
+    let tag = '';
+    if (item.status === 'closed') {
+        if (!item.status_notes || item.status_notes === null) {
+            tag = 'no-solved-note';
+        } else if (SOLVEDNOTES.indexOf(item.status_notes) !== -1) {
+            tag = 'solved-note-known';
+        } else if (FORWAREDNOTES.indexOf(item.status_notes) !== -1) {
+            tag = 'forwarded-note-known';
+        } else {
+            tag = 'solved-note-unknown';
+        }
+    } else {
+        const moreThenYearOld =
+            new Date().getTime() - new Date(item.requested_datetime).getTime() >
+            365 * 24 * 60 * 60 * 1000;
+        if (moreThenYearOld) {
+            tag = 'open-more-than-year';
+        }
+    }
+    return `issue-${tag}`;
+};
+export const getA11yIssues = (item: MAENGEL) => {
+    const status = item.status ? item.status.toLowerCase() : '';
+    for (const type of STATUS_TYPES) {
+        if (status.indexOf(type) !== -1) {
+            return (`type-${type}`);
+        }
+    }
+    const description = item.description ? item.description.toLowerCase() : '';
+    for (const word of A11Y_WORDS) {
+        if (description.indexOf(word) !== -1) {
+            return `a11y-word-${word}`;
+        }
+    }
+    return false;
+};
+
 export const analyzeItems = (rawItems: MAENGEL[]) => {
     const zipcodes: string[] = [];
     const stats = {};
@@ -56,36 +95,35 @@ export const analyzeItems = (rawItems: MAENGEL[]) => {
     const unknownSolvedNotes: string[] = [];
 
     zipcodes.sort();
-    for (const item of rawItems) {
-        const newItem: any = { ...item, tags: [] };
-        if (item.zipcode && !zipcodes.includes(item.zipcode)) {
-            zipcodes.push(item.zipcode);
+    for (const rawItem of rawItems) {
+        const newItem: any = { ...rawItem, tags: [] };
+        if (rawItem.zipcode && !zipcodes.includes(rawItem.zipcode)) {
+            zipcodes.push(rawItem.zipcode);
+        }
+        const statusTag = analyzeSolving(rawItem);
+        if (statusTag) {
+            newItem.tags.push(statusTag);
+            setStat(statusTag, stats);
+            if (statusTag === 'solved-note-unknown' && rawItem.status_notes) {
+                unknownSolvedNotes.push(rawItem.status_notes);
+            }
         }
 
-        if (item.status === "closed") {
-            if (!item.status_notes || item.status_notes === null) {
-                newItem.tags.push("no-solved-note");
-                setStat("no-solved-note", stats);
-            } else if (SOLVEDNOTES.indexOf(item.status_notes) !== -1) {
-                newItem.tags.push("solved-note-known");
-                setStat("solved-note-known", stats);
-            } else if (FORWAREDNOTES.indexOf(item.status_notes) !== -1) {
-                newItem.tags.push("forwarded-note-known");
-                setStat("forwarded-note-known", stats);
-            } else {
-                newItem.tags.push("solved-note-unknown");
-                setStat("solved-note-unknown", stats);
-                unknownSolvedNotes.push(item.status_notes);
-            }
-        } else {
-            const moreThenYearOld =
-                new Date().getTime() -
-                    new Date(item.requested_datetime).getTime() >
-                365 * 24 * 60 * 60 * 1000;
-            if (moreThenYearOld) {
-                newItem.tags.push("open-more-than-year");
-                setStat("open-more-than-year", stats);
-            }
+        const a11yTag = getA11yIssues(rawItem);
+        if (a11yTag) {
+            newItem.tags.push(a11yTag);
+
+            setStat(a11yTag, stats);
+        }
+        const startDate = rawItem.requested_datetime;
+        const lastDate = rawItem.updated_datetime;
+        let daysSolving = 0;
+        if (rawItem.status === 'closed') {
+            daysSolving = Math.floor(
+                (new Date(lastDate).getTime() - new Date(startDate).getTime()) /
+                    (24 * 60 * 60 * 1000)
+            );
+            newItem.daysSolving = daysSolving;
         }
         items.push(newItem);
     }
